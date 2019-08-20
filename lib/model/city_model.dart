@@ -20,14 +20,14 @@ List<CityModel> cities = [
     name: 'Paris',
     activities: 20,
     country: 'France',
-    description: 'Enjoy best trip from top travel agencies at best price for this trip',
+    description: 'Visit the most popular city in the world',
     image: 'https://www.telegraph.co.uk/content/dam/Travel/2018/May/paris.jpg?imwidth=450',
   ),
   CityModel(
     name: 'Phnom penh',
     activities: 190,
     country: 'Cambodia',
-    description: 'Enjoy best trip from top travel agencies at best price for this trip',
+    description: 'Experience the cultural of cambodia',
     image: 'https://s-ec.bstatic.com/images/hotel/max1024x768/187/187206953.jpg',
   ),
 ];

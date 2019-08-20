@@ -16,7 +16,7 @@ class CityInfo extends StatelessWidget {
           Text(city.name, style: TextStyle(fontSize: 24, color: Colors.white)),
           Row(
             children: <Widget>[
-              Icon(Icons.flight_takeoff, color: Colors.white),
+              Icon(Icons.flight_takeoff, color: Colors.white, size: 14),
               SizedBox(width: 8),
               Text(city.country, style: TextStyle(fontSize: 14, color: Colors.white)),
             ],

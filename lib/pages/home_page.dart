@@ -1,24 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_travel_booking/widgets/city_card.dart';
 import 'package:flutter_travel_booking/model/city_model.dart';
 import 'package:flutter_travel_booking/model/icon_model.dart';
-
-void main() => runApp(MyApp());
-
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Flutter Travel Booking'),
-    );
-  }
-}
+import 'package:flutter_travel_booking/widgets/city_card.dart';
+import 'package:flutter_travel_booking/widgets/content_title.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -30,6 +14,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 1;
+  int _value = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -41,18 +26,13 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              SizedBox(height: 64),
+              SizedBox(height: AppBar().preferredSize.height * 1.5),
               Text('What you would like to find??', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
               SizedBox(height: 32),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: icons.map((icon) => buildIconRow(icon)).toList(),
-              ),
-              SizedBox(height: 32),
-              Text('Top Destinations', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-              SizedBox(height: 24),
+              buildIconRow(),
+              ContentTitle('Top Destinations'),
               buildCityList(),
-              SizedBox(height: 32),
+              ContentTitle('Exclusive Hotels'),
             ],
           ),
         ),
@@ -71,43 +51,43 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
         items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            title: Text('Search'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.flight),
-            title: Text('Flight'),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            title: Text('Profile'),
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.search), title: Text('Search')),
+          BottomNavigationBarItem(icon: Icon(Icons.flight), title: Text('Flight')),
+          BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('Profile')),
         ],
       ),
     );
   }
 
-  Widget buildIconRow(icon) {
-    return Container(
-      width: 54,
-      height: 54,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: icon.isSelected ? Colors.blue : Colors.blueGrey,
-      ),
-      child: Center(
-        child: IconButton(
-          icon: Icon(icon.icon, color: Colors.white, size: 32),
-          onPressed: () {},
-        ),
-      ),
+  Widget buildIconRow() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: List<Widget>.generate(
+        icons.length,
+        (int index) {
+          return ChoiceChip(
+            label: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(
+                icons[index].icon,
+                color: _value == index ? Colors.blue : Colors.black,
+              ),
+            ),
+            selected: _value == index,
+            onSelected: (bool selected) {
+              setState(() {
+                _value = selected ? index : null;
+              });
+            },
+          );
+        },
+      ).toList(),
     );
   }
 
   Widget buildCityList() {
     return Container(
-      height: 320,
+      height: 300,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         physics: BouncingScrollPhysics(),
