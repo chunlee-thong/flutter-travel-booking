@@ -15,14 +15,14 @@ class CityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.6;
     return Container(
-      margin: EdgeInsets.only(right: 16),
+      margin: EdgeInsets.only(right: 8),
       width: cardWidth,
       child: InkWell(
         onTap: () => viewCity(context),
         customBorder: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(16)),
         child: Stack(
           children: <Widget>[
-            buildinfoCard(context, cardWidth),
+            buildInfoCard(context, cardWidth),
             buildImageCard(cardWidth),
           ],
         ),
@@ -30,7 +30,7 @@ class CityCard extends StatelessWidget {
     );
   }
 
-  Widget buildinfoCard(context, cardWidth) {
+  Widget buildInfoCard(context, cardWidth) {
     return Positioned(
       bottom: 0,
       child: Container(

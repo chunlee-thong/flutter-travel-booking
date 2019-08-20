@@ -50,18 +50,16 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               )
             ],
-            body: Container(
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: ListView.builder(
-                      physics: BouncingScrollPhysics(),
-                      itemCount: activities.length,
-                      itemBuilder: (context, index) => ActivityCard(activities[index]),
-                    ),
+            body: Column(
+              children: <Widget>[
+                Expanded(
+                  child: ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    itemCount: activities.length,
+                    itemBuilder: (context, index) => ActivityCard(activities[index]),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             //buildCityInfo(),
           ),
@@ -119,7 +117,7 @@ class _DetailPageState extends State<DetailPage> {
       child: Container(
         decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(16)),
-          color: Colors.black26,
+          color: Colors.black45,
         ),
         padding: const EdgeInsets.all(8.0),
         child: Column(
