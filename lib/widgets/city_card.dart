@@ -3,28 +3,50 @@ import 'package:flutter_travel_booking/pages/detail_page.dart';
 import 'package:flutter_travel_booking/model/city_model.dart';
 import 'package:flutter_travel_booking/widgets/city_info.dart';
 
-class CityCard extends StatelessWidget {
+class CityCard extends StatefulWidget {
   final CityModel city;
   CityCard(this.city);
 
+  @override
+  _CityCardState createState() => _CityCardState();
+}
+
+class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin {
+  AnimationController animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))..forward();
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
   void viewCity(context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(city)));
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(widget.city)));
   }
 
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.6;
-    return Container(
-      margin: EdgeInsets.only(right: 8),
-      width: cardWidth,
-      child: InkWell(
-        onTap: () => viewCity(context),
-        customBorder: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(16)),
-        child: Stack(
-          children: <Widget>[
-            buildInfoCard(context, cardWidth),
-            buildImageCard(cardWidth),
-          ],
+    return ScaleTransition(
+      scale: CurvedAnimation(parent: animationController, curve: Curves.easeInToLinear),
+      child: Container(
+        margin: EdgeInsets.only(right: 8),
+        width: cardWidth,
+        child: InkWell(
+          onTap: () => viewCity(context),
+          customBorder: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(16)),
+          child: Stack(
+            children: <Widget>[
+              buildInfoCard(context, cardWidth),
+              buildImageCard(cardWidth),
+            ],
+          ),
         ),
       ),
     );
@@ -46,12 +68,12 @@ class CityCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 Text(
-                  '${city.activities} activities',
+                  '${widget.city.activities} activities',
                   style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 8),
                 Text(
-                  city.description,
+                  widget.city.description,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Colors.black38),
@@ -75,8 +97,8 @@ class CityCard extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(16)),
           child: Stack(
             children: <Widget>[
-              Positioned.fill(child: Hero(tag: city.image, child: Image.network(city.image, fit: BoxFit.cover))),
-              CityInfo(city),
+              Positioned.fill(child: Hero(tag: widget.city.image, child: Image.network(widget.city.image, fit: BoxFit.cover))),
+              CityInfo(widget.city),
             ],
           ),
         ),
