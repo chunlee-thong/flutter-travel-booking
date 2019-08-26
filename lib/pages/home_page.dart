@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_travel_booking/constant/values.dart';
 import 'package:flutter_travel_booking/model/city_model.dart';
 import 'package:flutter_travel_booking/model/icon_model.dart';
 import 'package:flutter_travel_booking/widgets/city_card.dart';
@@ -27,7 +28,7 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: AppBar().preferredSize.height * 1.5),
-              Text('What you would like to find??', style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+              Text('What you would like to find??', style: headerStyle),
               SizedBox(height: 32),
               buildIconRow(),
               ContentTitle('Top Destinations'),

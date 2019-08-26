@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_travel_booking/constant/values.dart';
 import 'package:flutter_travel_booking/pages/detail_page.dart';
 import 'package:flutter_travel_booking/model/city_model.dart';
 import 'package:flutter_travel_booking/widgets/city_info.dart';
@@ -30,6 +31,16 @@ class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin
     Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(widget.city)));
   }
 
+  Widget onImageLoading(context, Widget child, ImageChunkEvent progress) {
+    if (progress == null) return child;
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.all(32),
+        child: CircularProgressIndicator(value: progress.expectedTotalBytes != null ? progress.cumulativeBytesLoaded / progress.expectedTotalBytes : null),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.6;
@@ -40,7 +51,7 @@ class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin
         width: cardWidth,
         child: InkWell(
           onTap: () => viewCity(context),
-          customBorder: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(16)),
+          customBorder: roundedRect16,
           child: Stack(
             children: <Widget>[
               buildInfoCard(context, cardWidth),
@@ -60,7 +71,7 @@ class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin
         width: cardWidth,
         child: Card(
           elevation: 3,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(12))),
+          shape: roundedRect12,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Column(
@@ -69,14 +80,14 @@ class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin
               children: <Widget>[
                 Text(
                   '${widget.city.activities} activities',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  style: titleStyle,
                 ),
                 SizedBox(height: 8),
                 Text(
                   widget.city.description,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300, color: Colors.black38),
+                  style: subtitleStyle,
                 )
               ],
             ),
@@ -92,12 +103,21 @@ class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin
       height: 200,
       padding: EdgeInsets.symmetric(horizontal: 12),
       child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+        shape: roundedRect16,
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(16)),
           child: Stack(
             children: <Widget>[
-              Positioned.fill(child: Hero(tag: widget.city.image, child: Image.network(widget.city.image, fit: BoxFit.cover))),
+              Positioned.fill(
+                child: Hero(
+                  tag: widget.city.image,
+                  child: Image.network(
+                    widget.city.image,
+                    fit: BoxFit.cover,
+                    loadingBuilder: onImageLoading,
+                  ),
+                ),
+              ),
               CityInfo(widget.city),
             ],
           ),

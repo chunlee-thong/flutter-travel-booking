@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_travel_booking/constant/values.dart';
 import 'package:flutter_travel_booking/model/activity_model.dart';
 import 'package:flutter_travel_booking/model/city_model.dart';
 import 'package:flutter_travel_booking/widgets/activity_card.dart';
@@ -116,7 +117,7 @@ class _DetailPageState extends State<DetailPage> {
       left: 16,
       child: Container(
         decoration: ShapeDecoration(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadiusDirectional.circular(16)),
+          shape: roundedRect16,
           color: Colors.black45,
         ),
         padding: const EdgeInsets.all(8.0),
@@ -124,7 +125,7 @@ class _DetailPageState extends State<DetailPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(widget.cityModel.name, style: TextStyle(fontSize: 40, color: Colors.white)),
+            Text(widget.cityModel.name, style: cityTitleStyle),
             Row(
               children: <Widget>[
                 Icon(Icons.flight_takeoff, color: Colors.white),

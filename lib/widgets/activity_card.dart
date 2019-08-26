@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:flutter_travel_booking/constant/values.dart';
 import 'package:flutter_travel_booking/model/activity_model.dart';
 
 class ActivityCard extends StatefulWidget {
@@ -31,10 +33,17 @@ class _ActivityCardState extends State<ActivityCard> with SingleTickerProviderSt
     super.dispose();
   }
 
+  Widget onImageLoading(context, Widget child, ImageChunkEvent progress) {
+    if (progress == null) return child;
+    return Container(
+      padding: EdgeInsets.only(left: 32, top: 64),
+      child: CircularProgressIndicator(value: progress.expectedTotalBytes != null ? progress.cumulativeBytesLoaded / progress.expectedTotalBytes : null),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    var titleStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
     return AnimatedBuilder(
       animation: animation,
       builder: (context, _) => Transform(
@@ -45,55 +54,28 @@ class _ActivityCardState extends State<ActivityCard> with SingleTickerProviderSt
           height: 200,
           child: Stack(
             children: <Widget>[
+              //activity info
               Container(
                 margin: EdgeInsets.only(left: 32),
                 child: Card(
                   elevation: 3,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(16)),
-                    side: BorderSide(width: 0.1, color: Colors.black),
-                  ),
+                  shape: roundedRect16,
                   child: Padding(
                     padding: EdgeInsets.only(left: size.width / 3, top: 12, right: 12),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Flexible(
-                              flex: 2,
-                              child: Text(widget.activity.name, overflow: TextOverflow.ellipsis, maxLines: 2, style: titleStyle),
-                            ),
-                            Flexible(
-                              flex: 2,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: <Widget>[
-                                  Text('\$' + widget.activity.price.toString(), style: titleStyle),
-                                  Text('Per person'),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 8),
-                        Text(widget.activity.description, style: TextStyle(color: Colors.black54)),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: List<Widget>.generate(5, (index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 6.0, bottom: 6.0, right: 2),
-                              child: Icon(Icons.star, color: Colors.orangeAccent, size: 14),
-                            );
-                          }),
-                        ),
+                        buildInfo(),
+                        Text(widget.activity.description),
+                        buildRating(),
                         buildTimeRow(),
                       ],
                     ),
                   ),
                 ),
               ),
+              //left image
               Container(
                 margin: EdgeInsets.all(12),
                 child: ClipRRect(
@@ -103,6 +85,7 @@ class _ActivityCardState extends State<ActivityCard> with SingleTickerProviderSt
                     width: size.width / 3,
                     height: 200,
                     fit: BoxFit.cover,
+                    loadingBuilder: onImageLoading,
                   ),
                 ),
               ),
@@ -113,30 +96,72 @@ class _ActivityCardState extends State<ActivityCard> with SingleTickerProviderSt
     );
   }
 
-  Widget buildTimeRow() {
+  Widget buildInfo() {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-          ),
-          color: Colors.blue[100],
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('9:00am'),
+        Flexible(
+          flex: 2,
+          child: Text(
+            widget.activity.name,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
+            style: titleStyle,
           ),
         ),
-        Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-          ),
-          color: Colors.blue[100],
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text('11:00am'),
+        Flexible(
+          flex: 2,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Text('\$' + widget.activity.price.toString(), style: titleStyle),
+              Text('Per person'),
+            ],
           ),
         ),
       ],
+    );
+  }
+
+  Widget buildRating() {
+    return Container(
+      child: RatingBar(
+        initialRating: widget.activity.rating,
+        direction: Axis.horizontal,
+        itemCount: 5,
+        itemSize: 14,
+        unratedColor: Colors.black,
+        itemPadding: EdgeInsets.only(right: 4.0),
+        ignoreGestures: true,
+        itemBuilder: (context, index) => Icon(Icons.star, color: Colors.orangeAccent),
+        onRatingUpdate: (rating) {},
+      ),
+    );
+  }
+
+  Widget buildTimeRow() {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 8),
+      child: Row(
+        children: <Widget>[
+          Card(
+            shape: roundedRect12,
+            color: Colors.blue[100],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('9:00am'),
+            ),
+          ),
+          Card(
+            shape: roundedRect12,
+            color: Colors.blue[100],
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('11:00am'),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
