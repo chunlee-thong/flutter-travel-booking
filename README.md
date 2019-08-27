@@ -6,6 +6,8 @@ A Flutter Travel Booking app UI concept
 
 This design UI is inspire from https://dribbble.com/shots/6510521-Travel-App-for-booking-unique-experience
 
+![app-design](lib/images/home.png)
+
 ## App UI
 
 <a href="https://imgflip.com/gif/38wkd7"><img src="https://i.imgflip.com/38wkd7.gif" title="made at imgflip.com"/></a>

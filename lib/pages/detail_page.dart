@@ -3,7 +3,6 @@ import 'package:flutter_travel_booking/constant/values.dart';
 import 'package:flutter_travel_booking/model/activity_model.dart';
 import 'package:flutter_travel_booking/model/city_model.dart';
 import 'package:flutter_travel_booking/widgets/activity_card.dart';
-import 'package:flutter_travel_booking/widgets/city_info.dart';
 import 'package:flutter/cupertino.dart';
 
 class DetailPage extends StatefulWidget {
@@ -57,7 +56,8 @@ class _DetailPageState extends State<DetailPage> {
                   child: ListView.builder(
                     physics: BouncingScrollPhysics(),
                     itemCount: activities.length,
-                    itemBuilder: (context, index) => ActivityCard(activities[index]),
+                    itemBuilder: (context, index) =>
+                        ActivityCard(activities[index]),
                   ),
                 ),
               ],
@@ -81,8 +81,11 @@ class _DetailPageState extends State<DetailPage> {
               onPressed: () => Navigator.of(context).pop(),
             ),
             Spacer(),
-            IconButton(icon: Icon(Icons.search, color: Colors.white), onPressed: () {}),
-            IconButton(icon: Icon(Icons.menu, color: Colors.white), onPressed: () {}),
+            IconButton(
+                icon: Icon(Icons.search, color: Colors.white),
+                onPressed: () {}),
+            IconButton(
+                icon: Icon(Icons.menu, color: Colors.white), onPressed: () {}),
           ],
         ),
       ),
@@ -130,7 +133,8 @@ class _DetailPageState extends State<DetailPage> {
               children: <Widget>[
                 Icon(Icons.flight_takeoff, color: Colors.white),
                 SizedBox(width: 8),
-                Text(widget.cityModel.country, style: TextStyle(fontSize: 24, color: Colors.white)),
+                Text(widget.cityModel.country,
+                    style: TextStyle(fontSize: 24, color: Colors.white)),
               ],
             ),
           ],

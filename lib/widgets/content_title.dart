@@ -12,7 +12,19 @@ class ContentTitle extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(title, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          Text('See all', style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: Colors.blueAccent)),
+          InkWell(
+            onTap: () {},
+            customBorder: StadiumBorder(),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('See all',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent,
+                  )),
+            ),
+          ),
         ],
       ),
     );
