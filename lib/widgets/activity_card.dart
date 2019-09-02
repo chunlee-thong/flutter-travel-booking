@@ -37,7 +37,10 @@ class _ActivityCardState extends State<ActivityCard> with SingleTickerProviderSt
     if (progress == null) return child;
     return Container(
       padding: EdgeInsets.only(left: 32, top: 64),
-      child: CircularProgressIndicator(value: progress.expectedTotalBytes != null ? progress.cumulativeBytesLoaded / progress.expectedTotalBytes : null),
+      child: CircularProgressIndicator(
+          value: progress.expectedTotalBytes != null
+              ? progress.cumulativeBytesLoaded / progress.expectedTotalBytes
+              : null),
     );
   }
 
