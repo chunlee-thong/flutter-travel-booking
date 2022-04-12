@@ -64,6 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
         icons.length,
         (int index) {
           return ChoiceChip(
+            selectedColor: Colors.blueAccent.withOpacity(0.2),
             label: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Icon(
