@@ -6,8 +6,7 @@ import 'package:flutter_travel_booking/widgets/city_card.dart';
 import 'package:flutter_travel_booking/widgets/content_title.dart';
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -15,25 +14,25 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 1;
-  int _value = 1;
+  int? _selectedIcon = 1;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               SizedBox(height: AppBar().preferredSize.height * 1.5),
-              Text('What you would like to find??', style: headerStyle),
-              SizedBox(height: 32),
+              const Text('What you would like to find??', style: headerStyle),
+              const SizedBox(height: 32),
               buildIconRow(),
-              ContentTitle('Top Destinations'),
+              const ContentTitle(title: 'Top Destinations'),
               buildCityList(),
-              ContentTitle('Exclusive Hotels'),
+              const ContentTitle(title: 'Exclusive Hotels'),
             ],
           ),
         ),
@@ -51,10 +50,10 @@ class _MyHomePageState extends State<MyHomePage> {
             _currentIndex = index;
           });
         },
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.search), title: Text('Search')),
-          BottomNavigationBarItem(icon: Icon(Icons.flight), title: Text('Flight')),
-          BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('Profile')),
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
+          BottomNavigationBarItem(icon: Icon(Icons.flight), label: 'Flight'),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
       ),
     );
@@ -71,13 +70,13 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.all(8.0),
               child: Icon(
                 icons[index].icon,
-                color: _value == index ? Colors.blue : Colors.black,
+                color: _selectedIcon == index ? Colors.blue : Colors.black,
               ),
             ),
-            selected: _value == index,
+            selected: _selectedIcon == index,
             onSelected: (bool selected) {
               setState(() {
-                _value = selected ? index : null;
+                _selectedIcon = selected ? index : index;
               });
             },
           );
@@ -87,14 +86,14 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget buildCityList() {
-    return Container(
+    return SizedBox(
       height: 300,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        physics: BouncingScrollPhysics(),
-        itemCount: cities.length,
+        physics: const BouncingScrollPhysics(),
+        itemCount: kCitiesList.length,
         itemBuilder: (BuildContext context, int index) {
-          return CityCard(cities[index]);
+          return CityCard(city: kCitiesList[index]);
         },
       ),
     );

@@ -4,10 +4,16 @@ class Activity {
   double rating;
   String image;
   double price;
-  Activity({this.description, this.name, this.image, this.price, this.rating});
+  Activity({
+    required this.description,
+    required this.name,
+    required this.image,
+    required this.price,
+    required this.rating,
+  });
 }
 
-List<Activity> activities = [
+List<Activity> kActivitiesList = [
   Activity(
     name: 'St.Mark Basilica',
     description: 'Sightseeing tour',

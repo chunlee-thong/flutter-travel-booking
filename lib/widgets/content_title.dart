@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class ContentTitle extends StatelessWidget {
   final String title;
-  ContentTitle(this.title);
+
+  const ContentTitle({Key? key, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,12 +12,12 @@ class ContentTitle extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Text(title, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          Text(title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           InkWell(
             onTap: () {},
-            customBorder: StadiumBorder(),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
+            customBorder: const StadiumBorder(),
+            child: const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text('See all',
                   style: TextStyle(
                     fontSize: 14,

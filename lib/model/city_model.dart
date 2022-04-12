@@ -5,16 +5,23 @@ class CityModel {
   String description;
   int activities;
 
-  CityModel({this.name, this.image, this.activities, this.country, this.description});
+  CityModel({
+    required this.name,
+    required this.image,
+    required this.activities,
+    required this.country,
+    required this.description,
+  });
 }
 
-List<CityModel> cities = [
+List<CityModel> kCitiesList = [
   CityModel(
     name: 'Venice',
     country: 'Italy',
     activities: 120,
     description: 'Enjoy best trip from top travel agencies at best price for this trip',
-    image: 'https://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/Italy/Venice/venice-restaurants-2.jpg?imwidth=450',
+    image:
+        'https://www.telegraph.co.uk/content/dam/Travel/Destinations/Europe/Italy/Venice/venice-restaurants-2.jpg?imwidth=450',
   ),
   CityModel(
     name: 'Paris',
@@ -35,6 +42,7 @@ List<CityModel> cities = [
     activities: 240,
     country: 'Cambodia',
     description: 'Explore the ancient temple and cultural village',
-    image: 'https://img.traveltriangle.com/blog/wp-content/tr:w-700,h-400/uploads/2018/05/ta-prohm-Angkor-Thom-siem-reap.jpg',
+    image:
+        'https://img.traveltriangle.com/blog/wp-content/tr:w-700,h-400/uploads/2018/05/ta-prohm-Angkor-Thom-siem-reap.jpg',
   ),
 ];

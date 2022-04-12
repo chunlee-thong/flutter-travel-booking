@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_travel_booking/constant/values.dart';
-import 'package:flutter_travel_booking/pages/detail_page.dart';
 import 'package:flutter_travel_booking/model/city_model.dart';
+import 'package:flutter_travel_booking/pages/detail_page.dart';
 import 'package:flutter_travel_booking/widgets/city_info.dart';
 
 class CityCard extends StatefulWidget {
   final CityModel city;
-  CityCard(this.city);
+
+  const CityCard({Key? key, required this.city}) : super(key: key);
 
   @override
   _CityCardState createState() => _CityCardState();
 }
 
 class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
 
   @override
   void initState() {
     super.initState();
-    animationController = AnimationController(vsync: this, duration: Duration(milliseconds: 500))..forward();
+    animationController = AnimationController(vsync: this, duration: const Duration(milliseconds: 500))..forward();
   }
 
   @override
@@ -27,16 +28,23 @@ class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin
     super.dispose();
   }
 
-  void viewCity(context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(widget.city)));
+  void viewCity() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => DetailPage(city: widget.city),
+      ),
+    );
   }
 
-  Widget onImageLoading(context, Widget child, ImageChunkEvent progress) {
+  Widget onImageLoading(context, Widget child, ImageChunkEvent? progress) {
     if (progress == null) return child;
     return Center(
       child: Padding(
-        padding: EdgeInsets.all(32),
-        child: CircularProgressIndicator(value: progress.expectedTotalBytes != null ? progress.cumulativeBytesLoaded / progress.expectedTotalBytes : null),
+        padding: const EdgeInsets.all(32),
+        child: CircularProgressIndicator(
+            value: progress.expectedTotalBytes != null
+                ? progress.cumulativeBytesLoaded / progress.expectedTotalBytes!
+                : null),
       ),
     );
   }
@@ -47,10 +55,10 @@ class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin
     return ScaleTransition(
       scale: CurvedAnimation(parent: animationController, curve: Curves.easeInToLinear),
       child: Container(
-        margin: EdgeInsets.only(right: 8),
+        margin: const EdgeInsets.only(right: 8),
         width: cardWidth,
         child: InkWell(
-          onTap: () => viewCity(context),
+          onTap: viewCity,
           customBorder: roundedRect16,
           child: Stack(
             children: <Widget>[
@@ -66,7 +74,7 @@ class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin
   Widget buildInfoCard(context, cardWidth) {
     return Positioned(
       bottom: 0,
-      child: Container(
+      child: SizedBox(
         height: 150,
         width: cardWidth,
         child: Card(
@@ -82,7 +90,7 @@ class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin
                   '${widget.city.activities} activities',
                   style: titleStyle,
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Text(
                   widget.city.description,
                   overflow: TextOverflow.ellipsis,
@@ -101,11 +109,11 @@ class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin
     return Container(
       width: cardWidth,
       height: 200,
-      padding: EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Card(
         shape: roundedRect16,
         child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(16)),
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
           child: Stack(
             children: <Widget>[
               Positioned.fill(
@@ -118,7 +126,7 @@ class _CityCardState extends State<CityCard> with SingleTickerProviderStateMixin
                   ),
                 ),
               ),
-              CityInfo(widget.city),
+              CityInfo(city: widget.city),
             ],
           ),
         ),

@@ -3,27 +3,25 @@ import 'package:flutter_travel_booking/constant/values.dart';
 import 'package:flutter_travel_booking/model/activity_model.dart';
 import 'package:flutter_travel_booking/model/city_model.dart';
 import 'package:flutter_travel_booking/widgets/activity_card.dart';
-import 'package:flutter/cupertino.dart';
 
 class DetailPage extends StatefulWidget {
-  final CityModel cityModel;
-  DetailPage(this.cityModel);
+  final CityModel city;
+
+  const DetailPage({Key? key, required this.city}) : super(key: key);
   @override
   _DetailPageState createState() => _DetailPageState();
 }
 
 class _DetailPageState extends State<DetailPage> {
   ScrollController scrollController = ScrollController();
-  Size size;
+  late Size size;
   double opacity = 0.0;
 
   @override
-  void initState() {
-    scrollController.addListener(scrollListener);
-    super.initState();
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
-
-  scrollListener() {}
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +35,7 @@ class _DetailPageState extends State<DetailPage> {
             headerSliverBuilder: (context, isScrolled) => [
               SliverAppBar(
                 expandedHeight: MediaQuery.of(context).size.height / 2.5,
-                iconTheme: IconThemeData(color: Colors.black),
+                iconTheme: const IconThemeData(color: Colors.black),
                 elevation: 0,
                 backgroundColor: Colors.transparent,
                 automaticallyImplyLeading: false,
@@ -54,56 +52,52 @@ class _DetailPageState extends State<DetailPage> {
               children: <Widget>[
                 Expanded(
                   child: ListView.builder(
-                    physics: BouncingScrollPhysics(),
-                    itemCount: activities.length,
-                    itemBuilder: (context, index) =>
-                        ActivityCard(activities[index]),
+                    physics: const BouncingScrollPhysics(),
+                    itemCount: kActivitiesList.length,
+                    itemBuilder: (context, index) => ActivityCard(activity: kActivitiesList[index]),
                   ),
                 ),
               ],
             ),
             //buildCityInfo(),
           ),
-          buildAppbar(context),
+          buildAppbar(),
         ],
       ),
     );
   }
 
-  Widget buildAppbar(BuildContext context) {
+  Widget buildAppbar() {
     return Material(
       color: Colors.black.withOpacity(0.2),
       child: SafeArea(
         child: Row(
           children: <Widget>[
             IconButton(
-              icon: Icon(Icons.arrow_back, color: Colors.white),
+              icon: const Icon(Icons.arrow_back, color: Colors.white),
               onPressed: () => Navigator.of(context).pop(),
             ),
-            Spacer(),
-            IconButton(
-                icon: Icon(Icons.search, color: Colors.white),
-                onPressed: () {}),
-            IconButton(
-                icon: Icon(Icons.menu, color: Colors.white), onPressed: () {}),
+            const Spacer(),
+            IconButton(icon: const Icon(Icons.search, color: Colors.white), onPressed: () {}),
+            IconButton(icon: const Icon(Icons.menu, color: Colors.white), onPressed: () {}),
           ],
         ),
       ),
     );
   }
 
-  Container buildCityImage() {
-    return Container(
+  Widget buildCityImage() {
+    return SizedBox(
       width: double.infinity,
       child: ClipRRect(
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(16)),
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(16)),
         child: Stack(
           fit: StackFit.expand,
           children: <Widget>[
             Hero(
-              tag: widget.cityModel.image,
+              tag: widget.city.image,
               child: Image.network(
-                widget.cityModel.image,
+                widget.city.image,
                 fit: BoxFit.cover,
               ),
             ),
@@ -128,13 +122,12 @@ class _DetailPageState extends State<DetailPage> {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(widget.cityModel.name, style: cityTitleStyle),
+            Text(widget.city.name, style: cityTitleStyle),
             Row(
               children: <Widget>[
-                Icon(Icons.flight_takeoff, color: Colors.white),
-                SizedBox(width: 8),
-                Text(widget.cityModel.country,
-                    style: TextStyle(fontSize: 24, color: Colors.white)),
+                const Icon(Icons.flight_takeoff, color: Colors.white),
+                const SizedBox(width: 8),
+                Text(widget.city.country, style: const TextStyle(fontSize: 24, color: Colors.white)),
               ],
             ),
           ],
