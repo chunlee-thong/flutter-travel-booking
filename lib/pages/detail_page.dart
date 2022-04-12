@@ -33,18 +33,22 @@ class _DetailPageState extends State<DetailPage> {
           NestedScrollView(
             controller: scrollController,
             headerSliverBuilder: (context, isScrolled) => [
-              SliverAppBar(
-                expandedHeight: MediaQuery.of(context).size.height / 2.5,
-                iconTheme: const IconThemeData(color: Colors.black),
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                automaticallyImplyLeading: false,
-                pinned: true,
-                floating: false,
-                snap: false,
-                flexibleSpace: FlexibleSpaceBar(
-                  collapseMode: CollapseMode.parallax,
-                  background: buildCityImage(),
+              SliverSafeArea(
+                top: false,
+                bottom: false,
+                sliver: SliverAppBar(
+                  expandedHeight: MediaQuery.of(context).size.height / 2.5,
+                  iconTheme: const IconThemeData(color: Colors.black),
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  automaticallyImplyLeading: false,
+                  pinned: true,
+                  floating: false,
+                  snap: false,
+                  flexibleSpace: FlexibleSpaceBar(
+                    collapseMode: CollapseMode.parallax,
+                    background: buildCityImage(),
+                  ),
                 ),
               )
             ],
@@ -71,6 +75,7 @@ class _DetailPageState extends State<DetailPage> {
     return Material(
       color: Colors.black.withOpacity(0.2),
       child: SafeArea(
+        bottom: false,
         child: Row(
           children: <Widget>[
             IconButton(
