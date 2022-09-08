@@ -18,12 +18,14 @@ class ContentTitle extends StatelessWidget {
             customBorder: const StadiumBorder(),
             child: const Padding(
               padding: EdgeInsets.all(8.0),
-              child: Text('See all',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent,
-                  )),
+              child: Text(
+                'See all',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueAccent,
+                ),
+              ),
             ),
           ),
         ],
